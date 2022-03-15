@@ -38,8 +38,6 @@ def wordle(first_guess='tares',
                                                          verbose=verbose)
 
     print(len(possible_words), 'Possible Words Remaining')
-
-    # Sort the remaining words by the amount of information they give
     entropies = get_entropies(possible_words, verbose=verbose)
 
     # Print the 25 most useful words
@@ -138,6 +136,8 @@ def get_entropies(words, verbose=False):
         # Using all the possible probabilities of all possible outcomes, get the entropy of the word
         entropy = get_entropy(possible_probabilities, verbose=verbose)
         lookup.at[word, 'entropy'] = entropy
+
+        # Sort the remaining words by the amount of information they give
         lookup = lookup.sort_values(by='entropy', ascending=False)
 
         if verbose:
