@@ -118,6 +118,7 @@ def get_entropies(words, verbose=False):
             if both:
                 if any(potential_result.index((letter, 'g')) < potential_result.index((letter, 'y'))
                        for letter in both):
+                    possible_probabilities.append(0)
                     continue
 
             # Get all possible words for a given guess and pattern
