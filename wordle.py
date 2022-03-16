@@ -108,6 +108,7 @@ def get_entropies(words, verbose=False):
             print(num)
         possible_probabilities = list()
 
+        # combo_dict = dict()
         for letter_combo in itertools.product(['g', 'y', 'G'], repeat=5):
             # Duplicate letters cannot have the grey letter come before the yellow letter
             potential_result = list(zip(word, letter_combo))
@@ -116,8 +117,8 @@ def get_entropies(words, verbose=False):
             grey_letters = {letter for letter, key in potential_result if key == 'g'}
             both = yellow_letters.intersection(grey_letters)
             if both:
-                if any(potential_result.index((letter, 'g')) < potential_result.index((letter, 'y'))
-                       for letter in both):
+                if any(potential_result.index((letter, 'g')) <
+                       4 - list(reversed(potential_result)).index((letter, 'y')) for letter in both):
                     possible_probabilities.append(0)
                     continue
 
@@ -133,6 +134,7 @@ def get_entropies(words, verbose=False):
 
             possible_probabilities.append(probability)
             lookup.at[word, ''.join(letter_combo)] = probability
+            # combo_dict[''.join(letter_combo)] = probability
 
         # Using all the possible probabilities of all possible outcomes, get the entropy of the word
         entropy = get_entropy(possible_probabilities, verbose=verbose)
